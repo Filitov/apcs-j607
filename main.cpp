@@ -38,7 +38,7 @@ int main()
 {
     // char eq[501];
     // cin.get(eq, 500);
-    char eq[] = "2+3*1+2*1";
+    char eq[] = "2+3*(1+2)*1";
 
     stack<char> op;
     stack<long long> opnd;
@@ -47,6 +47,16 @@ int main()
     {
         switch (*p)
         {
+        case '(':
+            op.push(*p);
+            break;
+        case ')':
+            while (op.top() != '(') {      // 到左括號之前的運算子都要計算
+                calculate(opnd, op.top());
+                op.pop();
+            }
+            op.pop();  // 取走 '('
+            break;
         case '+':
         case '-':
         case '*':
