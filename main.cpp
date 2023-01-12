@@ -17,9 +17,21 @@ bool higher_or_equal(char op1, char op2)
     return precendence(op1) >= precendence(op2);
 }
 
-void calculate(char op)
+void calculate(stack<long long> &opnd, char op)
 {
-    cout << "計算: " << op << endl;
+    long long a, b;
+    b = opnd.top();
+    opnd.pop();
+    a = opnd.top();
+    opnd.pop();
+    cout << "計算: " << a << " " << op << " " << b << endl;
+    switch (op)
+    {
+        case '+': opnd.push(a+b); break;
+        case '-': opnd.push(a-b); break;
+        case '*': opnd.push(a*b); break;
+        case '/': opnd.push(a/b); break;
+    }
 }
 
 int main()
@@ -40,7 +52,7 @@ int main()
         case '*':
         case '/':
             while (!op.empty() && higher_or_equal(op.top(),*p) ) {
-                calculate(op.top());
+                calculate(opnd, op.top());
                 op.pop();
             }
             op.push(*p);
@@ -51,9 +63,11 @@ int main()
     }
 
     while (!op.empty()){
-        calculate(op.top());
+        calculate(opnd, op.top());
         op.pop();
     }
+
+    cout << "結果: " << opnd.top() << endl;
 
     return 0;
 }
