@@ -5,9 +5,9 @@ using namespace std;
 
 int precendence(char op)
 {
-    if (op=='*' || op=='/')
-        return 2;
     if (op=='+' || op=='-')
+        return 2;
+    if (op=='*' || op=='/')
         return 1;
     return 0;
 }
@@ -108,9 +108,7 @@ int main()
 
             break;
         case '+':
-        case '-':
         case '*':
-        case '/':
             while (!op.empty() && higher_or_equal(op.top(),*p) ) {
                 calculate(opnd, op.top());
                 op.pop();
