@@ -34,6 +34,17 @@ void calculate(stack<long long> &opnd, char op)
     }
 }
 
+void calculate_f(stack<long long> &opnd)
+{
+    long long r;
+    r = opnd.top();
+    opnd.pop();
+
+    // f(?) 只有一個參數時...結果只有 0
+
+    opnd.push(0);
+}
+
 int main()
 {
     // char eq[501];
@@ -49,14 +60,15 @@ int main()
         {
         case 'f':
             op.push(*p);
-            p++;      // 去掉 f 後面的 '('
+            p++;
             break;
         case ')':
             while (op.top() != 'f') {
                 calculate(opnd, op.top());
                 op.pop();
             }
-            op.pop();  // 取走 '('
+            calculate_f(opnd);
+            op.pop();         // 取走 'f'
             break;
         case '+':
         case '-':
