@@ -34,22 +34,33 @@ void calculate(stack<long long> &opnd, char op)
     }
 }
 
-void calculate_f(stack<long long> &opnd)
+void calculate_f(stack<long long> &opnd, stack<char> &op)
 {
-    long long r;
-    r = opnd.top();
+    long long v;
+    v = opnd.top();    // at least one
     opnd.pop();
 
-    // f(?) 只有一個參數時...結果只有 0
+    cout << "f(" << v;       // DEBUG
 
+    while (op.top()!='f')
+    {
+        op.pop();
+        v = opnd.top();
+        opnd.pop();
+        cout << "," << v;   // DEBUG
+    }
+
+    cout << ")" << endl; // DEBUG
     opnd.push(0);
+
+    op.pop();                    // 取走 'f'
 }
 
 int main()
 {
     // char eq[501];
     // cin.get(eq, 500);
-    char eq[] = "2+3*f(1+2*3)*1";
+    char eq[] = "2+3*f(1+2*3,2*3)*1";
 
     stack<char> op;
     stack<long long> opnd;
@@ -63,12 +74,17 @@ int main()
             p++;
             break;
         case ')':
-            while (op.top() != 'f') {
+        case ',':
+            while (op.top() != 'f' && op.top() != ',') {
                 calculate(opnd, op.top());
                 op.pop();
             }
-            calculate_f(opnd);
-            op.pop();         // 取走 'f'
+
+            if (*p == ',')
+                op.push(*p);
+            else
+                calculate_f(opnd, op);
+
             break;
         case '+':
         case '-':
