@@ -29,6 +29,7 @@ int main()
     char eq[] = "2+3*1+2*1";
 
     stack<char> op;
+    stack<long long> opnd;
 
     for (char *p = eq; *p != '\0'; p++)
     {
@@ -45,7 +46,7 @@ int main()
             op.push(*p);
             break;
         default:
-            cout << "數字: " << *p << endl;
+            opnd.push(*p-'0');
         }
     }
 
