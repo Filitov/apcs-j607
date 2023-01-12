@@ -36,11 +36,11 @@ void calculate(stack<long long> &opnd, char op)
 
 void calculate_f(stack<long long> &opnd, stack<char> &op)
 {
-    long long v;
-    v = opnd.top();    // at least one
+    long long v, v_max, v_min;
+    v_max = v_min = opnd.top();    // at least one
     opnd.pop();
 
-    cout << "f(" << v;       // DEBUG
+    cout << "f(" << v_max;       // DEBUG
 
     while (op.top()!='f')
     {
@@ -48,10 +48,12 @@ void calculate_f(stack<long long> &opnd, stack<char> &op)
         v = opnd.top();
         opnd.pop();
         cout << "," << v;   // DEBUG
+        if (v>v_max) v_max = v;
+        if (v<v_min) v_min = v;
     }
 
-    cout << ")" << endl; // DEBUG
-    opnd.push(0);
+    cout << ") = "  << v_max-v_min << endl; // DEBUG
+    opnd.push(v_max-v_min);
 
     op.pop();                    // 取走 'f'
 }
@@ -60,7 +62,7 @@ int main()
 {
     // char eq[501];
     // cin.get(eq, 500);
-    char eq[] = "2+3*f(1+2*3,2*3)*1";
+    char eq[] = "1+f(1,2+f(8,1+2*3),1+1*f(2,4)*f(2))*2";
 
     stack<char> op;
     stack<long long> opnd;
