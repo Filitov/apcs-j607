@@ -24,7 +24,6 @@ void calculate(stack<long long> &opnd, char op)
     opnd.pop();
     a = opnd.top();
     opnd.pop();
-    cout << "計算: " << a << " " << op << " " << b << endl;
     switch (op)
     {
         case '+': opnd.push(a+b); break;
@@ -37,41 +36,35 @@ void calculate(stack<long long> &opnd, char op)
 void calculate_f(stack<long long> &opnd, stack<char> &op)
 {
     long long v, v_max, v_min;
-    v_max = v_min = opnd.top();    // at least one
+    v_max = v_min = opnd.top();
     opnd.pop();
-
-    cout << "f(" << v_max;       // DEBUG
 
     while (op.top()!='f')
     {
         op.pop();
         v = opnd.top();
         opnd.pop();
-        cout << "," << v;   // DEBUG
         if (v>v_max) v_max = v;
         if (v<v_min) v_min = v;
     }
 
-    cout << ") = "  << v_max-v_min << endl; // DEBUG
     opnd.push(v_max-v_min);
-
-    op.pop();                    // 取走 'f'
+    op.pop();
 }
 
 int main()
 {
-    // char eq[501];
-    // cin.get(eq, 500);
-    char eq[] = "12+f(13,2+f(8,1+2*3),1+1*f(20,4)*f(2))*2";
+    char eq[501];
+    cin.get(eq, 500);
+    // char eq[] = "12+f(13,2+f(8,1+2*3),1+1*f(20,4)*f(2))*2";
 
     stack<char> op;
     stack<long long> opnd;
 
-    long long val = -1;  // 取巧, 題目中沒有負數
+    long long val = -1;
 
     for (char *p = eq; *p != '\0'; p++)
     {
-        // 處理多位數元
         if (*p >= '0' && *p <= '9')
         {
             if (val == -1)
@@ -81,7 +74,6 @@ int main()
             continue;
         }
 
-        // 不是數元
         if (val >= 0)
         {
             opnd.push(val);
@@ -118,7 +110,6 @@ int main()
         }
     }
 
-    // 以數元結束
     if (val>=0) {
         opnd.push(val);
     }
@@ -128,7 +119,7 @@ int main()
         op.pop();
     }
 
-    cout << "結果: " << opnd.top() << endl;
+    cout << opnd.top();
 
     return 0;
 }
