@@ -17,6 +17,11 @@ bool higher_or_equal(char op1, char op2)
     return precendence(op1) >= precendence(op2);
 }
 
+void calculate(char op)
+{
+    cout << "計算: " << op << endl;
+}
+
 int main()
 {
     // char eq[501];
@@ -34,7 +39,7 @@ int main()
         case '*':
         case '/':
             while (!op.empty() && higher_or_equal(op.top(),*p) ) {
-                cout << "算符: " << op.top() << endl;
+                calculate(op.top());
                 op.pop();
             }
             op.push(*p);
@@ -45,7 +50,7 @@ int main()
     }
 
     while (!op.empty()){
-        cout << "算符?: " << op.top() << endl;
+        calculate(op.top());
         op.pop();
     }
 
