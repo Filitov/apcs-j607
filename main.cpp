@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -8,6 +9,8 @@ int main()
     // cin.get(eq, 500);
     char eq[] = "2+3*1+2+1";
 
+    stack<char> op;
+
     for (char *p = eq; *p != '\0'; p++)
     {
         switch (*p)
@@ -16,11 +19,20 @@ int main()
         case '-':
         case '*':
         case '/':
-            cout << "算符:" << *p << endl;
+            if (!op.empty()){
+                cout << "算符:" << op.top() << endl;
+                op.pop();
+            }
+            op.push(*p);
             break;
         default:
             cout << "數字:" << *p << endl;
         }
+    }
+
+    if (!op.empty()){
+        cout << "算符:" << op.top() << endl;
+        op.pop();
     }
 
     return 0;
