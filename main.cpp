@@ -10,7 +10,17 @@ int main()
 
     for (char *p = eq; *p != '\0'; p++)
     {
-        cout << *p << endl;
+        switch (*p)
+        {
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+            cout << "算符:" << *p << endl;
+            break;
+        default:
+            cout << "數字:" << *p << endl;
+        }
     }
 
     return 0;
