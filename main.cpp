@@ -62,13 +62,32 @@ int main()
 {
     // char eq[501];
     // cin.get(eq, 500);
-    char eq[] = "1+f(1,2+f(8,1+2*3),1+1*f(2,4)*f(2))*2";
+    char eq[] = "12+f(13,2+f(8,1+2*3),1+1*f(20,4)*f(2))*2";
 
     stack<char> op;
     stack<long long> opnd;
 
+    long long val = -1;  // 取巧, 題目中沒有負數
+
     for (char *p = eq; *p != '\0'; p++)
     {
+        // 處理多位數元
+        if (*p >= '0' && *p <= '9')
+        {
+            if (val == -1)
+                val = *p - '0';
+            else
+                val = val * 10 + (*p - '0');
+            continue;
+        }
+
+        // 不是數元
+        if (val >= 0)
+        {
+            opnd.push(val);
+            val = -1;
+        }
+
         switch (*p)
         {
         case 'f':
@@ -98,9 +117,12 @@ int main()
             }
             op.push(*p);
             break;
-        default:
-            opnd.push(*p-'0');
         }
+    }
+
+    // 以數元結束
+    if (val>=0) {
+        opnd.push(val);
     }
 
     while (!op.empty()){
